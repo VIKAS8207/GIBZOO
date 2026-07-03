@@ -1,18 +1,20 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { Stack } from "expo-router";
+import "../global.css"; // Ensure this import path is still correct!
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
-
-SplashScreen.preventAutoHideAsync();
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
+    <Stack screenOptions={{ headerShown: false }}>
+      {/* 1. The Login Screen */}
+      <Stack.Screen name="index" />
+      
+      {/* 2. The Tabs Group (This replaces the old dashboard!) */}
+      <Stack.Screen name="(tabs)" />
+      
+      {/* 3. The Detail Screens */}
+      <Stack.Screen name="history" />
+      <Stack.Screen name="guides" />
+      <Stack.Screen name="drivers" />
+      <Stack.Screen name="ticket-details" />
+    </Stack>
   );
 }
