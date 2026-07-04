@@ -1,16 +1,17 @@
 import { Stack } from "expo-router";
-import "../global.css"; // Ensure this import path is still correct!
+import "../global.css"; 
 
 export default function RootLayout() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      {/* 1. The Login Screen */}
+      {/* 1. Get Started Screen */}
       <Stack.Screen name="index" />
       
-      {/* 2. The Tabs Group (This replaces the old dashboard!) */}
-      <Stack.Screen name="(tabs)" />
+      {/* 2. Login Screen (Our renamed file) */}
+      <Stack.Screen name="login" />
       
-      {/* 3. The Detail Screens */}
+      {/* 3. The Tabs & Detail Screens */}
+      <Stack.Screen name="(tabs)" />
       <Stack.Screen name="history" />
       <Stack.Screen name="guides" />
       <Stack.Screen name="drivers" />
