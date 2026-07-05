@@ -17,73 +17,73 @@ export default function ProfileScreen() {
   };
 
   // ==========================================
-  // DYNAMIC ROLE DETAILS COMPONENT
+  // DYNAMIC ROLE DETAILS COMPONENT (EARTHY THEME)
   // ==========================================
   const renderRoleDetails = () => {
     switch (role) {
       case "Guide":
         return (
-          <View className="bg-zinc-900 p-6 rounded-3xl border border-zinc-800 mb-6">
-            <Text className="text-zinc-500 font-bold uppercase tracking-widest text-xs mb-4">Professional Details</Text>
+          <View className="bg-white p-6 rounded-3xl border-2 border-[#D4A373]/40 mb-8 shadow-xl shadow-[#8B5A2B]/10">
+            <Text className="text-[#8B5A2B] font-black uppercase tracking-widest text-xs mb-5">Professional Details</Text>
             
-            <View className="flex-row items-center justify-between mb-4 pb-4 border-b border-zinc-800/50">
-              <Text className="text-zinc-300 font-medium">Languages</Text>
-              <Text className="text-white font-bold">English, Hindi</Text>
+            <View className="flex-row items-center justify-between mb-4 pb-4 border-b-2 border-[#F9DCB4]/30">
+              <Text className="text-[#A07A63] font-bold">Languages</Text>
+              <Text className="text-[#4A3728] font-black">English, Hindi</Text>
             </View>
-            <View className="flex-row items-center justify-between mb-4 pb-4 border-b border-zinc-800/50">
-              <Text className="text-zinc-300 font-medium">Current Rating</Text>
+            <View className="flex-row items-center justify-between mb-4 pb-4 border-b-2 border-[#F9DCB4]/30">
+              <Text className="text-[#A07A63] font-bold">Current Rating</Text>
               <View className="flex-row items-center">
-                <Ionicons name="star" size={16} color="#facc15" />
-                <Text className="text-white font-bold ml-1">4.8 / 5.0</Text>
+                <Ionicons name="star" size={16} color="#D4A373" />
+                <Text className="text-[#4A3728] font-black ml-1.5">4.8 / 5.0</Text>
               </View>
             </View>
             <View className="flex-row items-center justify-between">
-              <Text className="text-zinc-300 font-medium">Total Tours</Text>
-              <Text className="text-yellow-500 font-extrabold text-lg">142</Text>
+              <Text className="text-[#A07A63] font-bold">Total Tours</Text>
+              <Text className="text-[#8B5A2B] font-black text-xl">142</Text>
             </View>
           </View>
         );
         
       case "Driver":
         return (
-          <View className="bg-zinc-900 p-6 rounded-3xl border border-zinc-800 mb-6">
-            <Text className="text-zinc-500 font-bold uppercase tracking-widest text-xs mb-4">Vehicle Details</Text>
+          <View className="bg-white p-6 rounded-3xl border-2 border-[#D4A373]/40 mb-8 shadow-xl shadow-[#8B5A2B]/10">
+            <Text className="text-[#8B5A2B] font-black uppercase tracking-widest text-xs mb-5">Vehicle Details</Text>
             
-            <View className="flex-row items-center justify-between mb-4 pb-4 border-b border-zinc-800/50">
-              <Text className="text-zinc-300 font-medium">Assigned Vehicle</Text>
-              <Text className="text-white font-bold">Safari Jeep (Open)</Text>
+            <View className="flex-row items-center justify-between mb-4 pb-4 border-b-2 border-[#F9DCB4]/30">
+              <Text className="text-[#A07A63] font-bold">Assigned Vehicle</Text>
+              <Text className="text-[#4A3728] font-black">Safari Jeep (Open)</Text>
             </View>
-            <View className="flex-row items-center justify-between mb-4 pb-4 border-b border-zinc-800/50">
-              <Text className="text-zinc-300 font-medium">License Plate</Text>
-              <View className="bg-black px-2 py-1 rounded border border-yellow-500/50">
-                <Text className="text-yellow-500 font-bold tracking-widest">CG04 AB 1234</Text>
+            <View className="flex-row items-center justify-between mb-4 pb-4 border-b-2 border-[#F9DCB4]/30">
+              <Text className="text-[#A07A63] font-bold">License Plate</Text>
+              <View className="bg-[#FAF8F5] px-3 py-1.5 rounded-lg border-2 border-[#D4A373]/50">
+                <Text className="text-[#8B5A2B] font-black tracking-widest">CG04 AB 1234</Text>
               </View>
             </View>
             <View className="flex-row items-center justify-between">
-              <Text className="text-zinc-300 font-medium">Total Trips</Text>
-              <Text className="text-yellow-500 font-extrabold text-lg">340</Text>
+              <Text className="text-[#A07A63] font-bold">Total Trips</Text>
+              <Text className="text-[#8B5A2B] font-black text-xl">340</Text>
             </View>
           </View>
         );
 
       default: // Gate Officer
         return (
-          <View className="bg-zinc-900 p-6 rounded-3xl border border-zinc-800 mb-6">
-            <Text className="text-zinc-500 font-bold uppercase tracking-widest text-xs mb-4">Assignment Details</Text>
+          <View className="bg-white p-6 rounded-3xl border-2 border-[#D4A373]/40 mb-8 shadow-xl shadow-[#8B5A2B]/10">
+            <Text className="text-[#8B5A2B] font-black uppercase tracking-widest text-xs mb-5">Assignment Details</Text>
             
-            <View className="flex-row items-center justify-between mb-4 pb-4 border-b border-zinc-800/50">
-              <Text className="text-zinc-300 font-medium">Active Post</Text>
-              <Text className="text-white font-bold text-lg">North Gate A</Text>
+            <View className="flex-row items-center justify-between mb-4 pb-4 border-b-2 border-[#F9DCB4]/30">
+              <Text className="text-[#A07A63] font-bold">Active Post</Text>
+              <Text className="text-[#4A3728] font-black text-lg">North Gate A</Text>
             </View>
-            <View className="flex-row items-center justify-between mb-4 pb-4 border-b border-zinc-800/50">
-              <Text className="text-zinc-300 font-medium">Current Shift</Text>
-              <Text className="text-white font-bold">08:00 AM - 04:00 PM</Text>
+            <View className="flex-row items-center justify-between mb-4 pb-4 border-b-2 border-[#F9DCB4]/30">
+              <Text className="text-[#A07A63] font-bold">Current Shift</Text>
+              <Text className="text-[#4A3728] font-black">08:00 AM - 04:00 PM</Text>
             </View>
             <View className="flex-row items-center justify-between">
-              <Text className="text-zinc-300 font-medium">Status</Text>
-              <View className="flex-row items-center bg-green-500/20 px-3 py-1 rounded-full border border-green-500/50">
-                <View className="w-2 h-2 rounded-full bg-green-500 mr-2" />
-                <Text className="text-green-500 font-bold text-xs uppercase tracking-wider">On Duty</Text>
+              <Text className="text-[#A07A63] font-bold">Status</Text>
+              <View className="flex-row items-center bg-green-50 px-3 py-1.5 rounded-full border-2 border-green-200">
+                <View className="w-2.5 h-2.5 rounded-full bg-green-500 mr-2" />
+                <Text className="text-green-600 font-black text-xs uppercase tracking-wider">On Duty</Text>
               </View>
             </View>
           </View>
@@ -92,34 +92,34 @@ export default function ProfileScreen() {
   };
 
   return (
-    <View className="flex-1 bg-[#050505] w-full h-screen">
+    <View className="flex-1 bg-[#FAF8F5] w-full h-screen">
       
       <Animated.View entering={FadeIn.duration(800)} className="flex-1 p-6 pt-12">
         
         {/* Header Section */}
-        <View className="flex-row justify-between items-center mb-10">
-          <Text className="text-white font-extrabold text-3xl tracking-tight">My Profile</Text>
-          
+        <View className="flex-row justify-between items-center mb-8">
+          <Text className="text-[#4A3728] font-black text-3xl tracking-tight">My Profile</Text>
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false}>
           
           {/* Top Identity Card */}
-          <Animated.View entering={FadeInUp.delay(100).springify()} className="items-center mb-8">
-            <View className="w-32 h-32 bg-zinc-900 rounded-full items-center justify-center mb-4 border-2 border-yellow-500 shadow-lg shadow-yellow-500/20">
-              <Ionicons name="person" size={50} color="white" />
+          <Animated.View entering={FadeInUp.delay(100).springify()} className="items-center mb-10">
+            {/* Soft Peach Avatar Background with crisp white border */}
+            <View className="w-32 h-32 bg-[#F9DCB4] rounded-full items-center justify-center mb-5 border-4 border-white shadow-xl shadow-[#8B5A2B]/20">
+              <Ionicons name="person" size={50} color="#8B5A2B" />
             </View>
             
-            <Text className="text-white text-2xl font-extrabold mb-1">
+            <Text className="text-[#4A3728] text-3xl font-black mb-1">
               {role === "Gate Officer" ? "Admin User" : role === "Guide" ? "Amit Sharma" : "Rahul Verma"}
             </Text>
             
-            <Text className="text-zinc-400 font-medium mb-3">
-              {role.toLowerCase()}@gibzoo.com
+            <Text className="text-[#A07A63] font-bold mb-4">
+              {role.toLowerCase().replace(' ', '')}@gibzoo.com
             </Text>
 
-            <View className="bg-yellow-500 px-4 py-1.5 rounded-full">
-              <Text className="text-[#050505] font-extrabold text-xs tracking-widest uppercase">
+            <View className="bg-[#8B5A2B] px-6 py-2 rounded-full shadow-md shadow-[#8B5A2B]/30">
+              <Text className="text-[#F9DCB4] font-black text-xs tracking-widest uppercase">
                 {role}
               </Text>
             </View>
@@ -134,10 +134,11 @@ export default function ProfileScreen() {
           <Animated.View entering={FadeInUp.delay(300).springify()}>
             <TouchableOpacity 
               onPress={handleLogout}
-              className="w-full bg-black border border-red-500/50 py-4 rounded-xl items-center flex-row justify-center mb-10"
+              // Added mb-32 so it easily clears your floating bottom navigation bar
+              className="w-full bg-white border-2 border-red-200 py-4 rounded-2xl items-center flex-row justify-center mb-32 shadow-lg shadow-red-500/10"
             >
-              <Ionicons name="power" size={20} color="#ef4444" className="mr-2" />
-              <Text className="text-red-500 font-bold text-lg">Secure Logout</Text>
+              <Ionicons name="power" size={22} color="#ef4444" className="mr-2" />
+              <Text className="text-red-500 font-black text-lg">Secure Logout</Text>
             </TouchableOpacity>
           </Animated.View>
 

@@ -18,8 +18,8 @@ import StaffDashboard from "../../components/StaffDashboard";
 // or set to something like "max-w-[500px]" to restrict it on tablets/web!
 const APP_MAX_WIDTH = "max-w-full w-full mx-auto"; 
 
-// The color of the screen below the hero image.
-const LOWER_BG_COLOR = "bg-[#F9DCB4]"; 
+// Warm off-white/cream base color for the lower half
+const LOWER_BG_COLOR = "bg-[#FAF8F5]"; 
 
 // Mobile Chart Padding Fix
 const chartWidth = Dimensions.get("window").width - 80; 
@@ -72,10 +72,11 @@ export default function DashboardScreen() {
   // ==========================================
   const renderGateOfficerUI = () => {
     
+    // Updated Chart Data with Earth Tones
     const pieData = [
-      { name: "Normal", population: 215, color: "#facc15", legendFontColor: "#d4d4d8" }, 
-      { name: "Mediocre", population: 130, color: "#3f3f46", legendFontColor: "#d4d4d8" }, 
-      { name: "VIP", population: 45, color: "#18181b", legendFontColor: "#d4d4d8" },      
+      { name: "Normal", population: 215, color: "#8B5A2B", legendFontColor: "#7A5C4A" }, 
+      { name: "Mediocre", population: 130, color: "#D4A373", legendFontColor: "#7A5C4A" }, 
+      { name: "VIP", population: 45, color: "#F9DCB4", legendFontColor: "#7A5C4A" },      
     ];
 
     const lineData = {
@@ -83,104 +84,104 @@ export default function DashboardScreen() {
       datasets: [{ data: [20, 45, 28, 80, 99, 43] }]
     };
 
+    // Clean, white background chart configuration
     const chartConfig = {
-      backgroundColor: "#18181b",
-      backgroundGradientFrom: "#18181b",
-      backgroundGradientTo: "#18181b",
+      backgroundColor: "#FFFFFF",
+      backgroundGradientFrom: "#FFFFFF",
+      backgroundGradientTo: "#FFFFFF",
       decimalPlaces: 0,
-      color: (opacity = 1) => `rgba(250, 204, 21, ${opacity})`, 
-      labelColor: (opacity = 1) => `rgba(161, 161, 170, ${opacity})`, 
+      color: (opacity = 1) => `rgba(139, 90, 43, ${opacity})`, 
+      labelColor: (opacity = 1) => `rgba(122, 92, 74, ${opacity})`, 
       style: { borderRadius: 16 },
-      propsForDots: { r: "4", strokeWidth: "2", stroke: "#facc15" }
+      propsForDots: { r: "5", strokeWidth: "3", stroke: "#8B5A2B" } 
     };
 
     return (
       <ScrollView showsVerticalScrollIndicator={false} className="flex-1">
         
-        {/* FIXED: Removed negative margins and w-screen. Just w-full! */}
-        <View className="w-full h-48">
+        {/* Hero Image Section */}
+        <View className="w-full h-48 relative">
           <Image 
             source={require("../../../assets/hero.jpg")}
-            className="w-full h-full opacity-70"
+            className="w-full h-full opacity-90"
             resizeMode="cover"
           />
         </View>
 
-        {/* FIXED: Lower background acts as a wrapper without negative margins */}
-        <View className={`flex-1 ${LOWER_BG_COLOR} pt-8 rounded-t-2xl -mt-6 shadow-2xl shadow-black pb-12`}>
+        {/* REFINED: Increased top margin/padding (-mt-10, pt-10) to fix overlap, deeper shadow */}
+        <View className={`flex-1 ${LOWER_BG_COLOR} -mt-10 pt-10 rounded-t-[32px] shadow-2xl shadow-[#4A3728]/20 pb-12`}>
           
           {/* Inner wrapper to keep padding safe from the edges */}
           <View className="px-6">
-            {/* Quick Action Grid */}
-            <View className="flex-row justify-between items-center mb-8 w-full">
-              <TouchableOpacity onPress={openCamera} className="flex-1 bg-yellow-500 py-4 rounded-2xl items-center justify-center mr-2 shadow-lg shadow-yellow-500/20">
-                <Ionicons name="qr-code-outline" size={24} color="#050505" className="mb-1" />
-                <Text className="text-[#050505] font-bold text-[10px] uppercase tracking-wider text-center">Scan</Text>
+            {/* Quick Action Grid - Popped borders and shadows */}
+            <View className="flex-row justify-between items-center mb-10 w-full">
+              <TouchableOpacity onPress={openCamera} className="flex-1 bg-[#8B5A2B] py-4 rounded-2xl items-center justify-center mr-2 shadow-xl shadow-[#8B5A2B]/40 border-2 border-[#8B5A2B]">
+                <Ionicons name="qr-code-outline" size={24} color="#F9DCB4" className="mb-1" />
+                <Text className="text-[#F9DCB4] font-extrabold text-[10px] uppercase tracking-wider text-center">Scan</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.push('/history')} className="flex-1 bg-zinc-900 py-4 rounded-2xl items-center justify-center mx-1 border border-zinc-800">
-                <Ionicons name="time-outline" size={24} color="white" className="mb-1" />
-                <Text className="text-white font-semibold text-[10px] uppercase tracking-wider text-center">History</Text>
+              <TouchableOpacity onPress={() => router.push('/history')} className="flex-1 bg-white py-4 rounded-2xl items-center justify-center mx-1 border-2 border-[#D4A373]/50 shadow-md shadow-[#8B5A2B]/15">
+                <Ionicons name="time-outline" size={24} color="#8B5A2B" className="mb-1" />
+                <Text className="text-[#8B5A2B] font-extrabold text-[10px] uppercase tracking-wider text-center">History</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.push('/guides')} className="flex-1 bg-zinc-900 py-4 rounded-2xl items-center justify-center mx-1 border border-zinc-800">
-                <Ionicons name="map-outline" size={24} color="white" className="mb-1" />
-                <Text className="text-white font-semibold text-[10px] uppercase tracking-wider text-center">Guides</Text>
+              <TouchableOpacity onPress={() => router.push('/guides')} className="flex-1 bg-white py-4 rounded-2xl items-center justify-center mx-1 border-2 border-[#D4A373]/50 shadow-md shadow-[#8B5A2B]/15">
+                <Ionicons name="map-outline" size={24} color="#8B5A2B" className="mb-1" />
+                <Text className="text-[#8B5A2B] font-extrabold text-[10px] uppercase tracking-wider text-center">Guides</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.push('/drivers')} className="flex-1 bg-zinc-900 py-4 rounded-2xl items-center justify-center ml-2 border border-zinc-800">
-                <Ionicons name="car-outline" size={24} color="white" className="mb-1" />
-                <Text className="text-white font-semibold text-[10px] uppercase tracking-wider text-center">Drivers</Text>
+              <TouchableOpacity onPress={() => router.push('/drivers')} className="flex-1 bg-white py-4 rounded-2xl items-center justify-center ml-2 border-2 border-[#D4A373]/50 shadow-md shadow-[#8B5A2B]/15">
+                <Ionicons name="car-outline" size={24} color="#8B5A2B" className="mb-1" />
+                <Text className="text-[#8B5A2B] font-extrabold text-[10px] uppercase tracking-wider text-center">Drivers</Text>
               </TouchableOpacity>
             </View>
 
-            <Text className="text-zinc-500 font-bold text-lg mb-4 ml-1">Recent Tickets</Text>
+            <Text className="text-[#8B5A2B] font-black text-lg mb-4 ml-1">Recent Tickets</Text>
           </View>
 
           {/* Active Tickets (Horizontal Scroll) */}
           <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-8 pl-6">
             
-            <View className="bg-zinc-900 p-4 rounded-2xl border border-zinc-800 mr-4 w-64 shadow-xl">
-              <View className="flex-row justify-between items-center mb-2 pb-2 border-b border-zinc-800/50">
-                <Text className="text-yellow-500 font-bold text-xs uppercase tracking-widest">VIP Ticket</Text>
-                <Text className="text-zinc-500 text-xs font-medium">10m ago</Text>
+            <View className="bg-white p-5 rounded-3xl border-2 border-[#D4A373]/40 mr-4 w-64 shadow-xl shadow-[#8B5A2B]/20">
+              <View className="flex-row justify-between items-center mb-3 pb-3 border-b-2 border-[#F9DCB4]/50">
+                <Text className="text-[#8B5A2B] font-black text-xs uppercase tracking-widest">VIP Ticket</Text>
+                <Text className="text-[#A07A63] text-xs font-bold">10m ago</Text>
               </View>
-              <Text className="text-white font-extrabold text-xl mb-3">Group #2045</Text>
+              <Text className="text-[#4A3728] font-black text-2xl mb-4">Group #2045</Text>
               <View className="flex-row items-center justify-between">
                 <View className="flex-row items-center">
-                  <Ionicons name="person" size={14} color="#a1a1aa" />
-                  <Text className="text-zinc-400 text-xs ml-1">Neha S.</Text>
+                  <Ionicons name="person" size={16} color="#8B5A2B" />
+                  <Text className="text-[#8B5A2B] font-bold text-xs ml-1.5">Neha S.</Text>
                 </View>
                 <View className="flex-row items-center">
-                  <Ionicons name="car" size={14} color="#a1a1aa" />
-                  <Text className="text-zinc-400 text-xs ml-1">Vikash</Text>
+                  <Ionicons name="car" size={16} color="#8B5A2B" />
+                  <Text className="text-[#8B5A2B] font-bold text-xs ml-1.5">Vikash</Text>
                 </View>
               </View>
             </View>
 
-            <View className="bg-zinc-900 p-4 rounded-2xl border border-zinc-800 mr-4 w-64 shadow-xl">
-              <View className="flex-row justify-between items-center mb-2 pb-2 border-b border-zinc-800/50">
-                <Text className="text-zinc-300 font-bold text-xs uppercase tracking-widest">Normal</Text>
-                <Text className="text-zinc-500 text-xs font-medium">25m ago</Text>
+            <View className="bg-white p-5 rounded-3xl border-2 border-[#D4A373]/40 mr-4 w-64 shadow-xl shadow-[#8B5A2B]/20">
+              <View className="flex-row justify-between items-center mb-3 pb-3 border-b-2 border-[#F9DCB4]/50">
+                <Text className="text-[#8B5A2B] font-black text-xs uppercase tracking-widest">Normal</Text>
+                <Text className="text-[#A07A63] text-xs font-bold">25m ago</Text>
               </View>
-              <Text className="text-white font-extrabold text-xl mb-3">Group #2044</Text>
+              <Text className="text-[#4A3728] font-black text-2xl mb-4">Group #2044</Text>
               <View className="flex-row items-center justify-between">
                 <View className="flex-row items-center">
-                  <Ionicons name="person" size={14} color="#a1a1aa" />
-                  <Text className="text-zinc-400 text-xs ml-1">Amit S.</Text>
+                  <Ionicons name="person" size={16} color="#8B5A2B" />
+                  <Text className="text-[#8B5A2B] font-bold text-xs ml-1.5">Amit S.</Text>
                 </View>
                 <View className="flex-row items-center">
-                  <Ionicons name="car" size={14} color="#a1a1aa" />
-                  <Text className="text-zinc-400 text-xs ml-1">Rahul V.</Text>
+                  <Ionicons name="car" size={16} color="#8B5A2B" />
+                  <Text className="text-[#8B5A2B] font-bold text-xs ml-1.5">Rahul V.</Text>
                 </View>
               </View>
             </View>
-            {/* Added spacer to let the user scroll fully to the right edge */}
             <View className="w-10" />
           </ScrollView>
 
           {/* Re-apply safe padding for the charts */}
           <View className="px-6">
             {/* The Pie Chart (Ticket Types) */}
-            <View className="w-full bg-zinc-900 p-4 rounded-3xl mb-6 border border-zinc-800 shadow-xl">
-              <Text className="text-zinc-400 font-bold uppercase tracking-widest text-xs mb-4 ml-2">Ticket Types</Text>
+            <View className="w-full bg-white p-5 rounded-3xl mb-8 border-2 border-[#D4A373]/40 shadow-2xl shadow-[#8B5A2B]/15">
+              <Text className="text-[#8B5A2B] font-black uppercase tracking-widest text-xs mb-4 ml-2">Ticket Types</Text>
               <PieChart
                 data={pieData}
                 width={chartWidth}
@@ -195,8 +196,8 @@ export default function DashboardScreen() {
             </View>
 
             {/* The Line Graph (Revenue Trend) */}
-            <View className="w-full bg-zinc-900 p-4 pt-6 rounded-3xl mb-8 border border-zinc-800 shadow-xl">
-              <Text className="text-zinc-400 font-bold uppercase tracking-widest text-xs mb-4 ml-2">Revenue Trend (₹ k)</Text>
+            <View className="w-full bg-white p-5 pt-6 rounded-3xl mb-10 border-2 border-[#D4A373]/40 shadow-2xl shadow-[#8B5A2B]/15">
+              <Text className="text-[#8B5A2B] font-black uppercase tracking-widest text-xs mb-4 ml-2">Revenue Trend (₹ k)</Text>
               <LineChart
                 data={lineData}
                 width={chartWidth} 
@@ -209,20 +210,20 @@ export default function DashboardScreen() {
             </View>
 
             {/* Today's Scheduled Tickets List */}
-            <Text className="text-zinc-500 font-bold text-lg mb-4 ml-1">Today's Schedule</Text>
+            <Text className="text-[#8B5A2B] font-black text-lg mb-4 ml-1">Today's Schedule</Text>
             {[1, 2, 3].map((item) => (
-              <View key={item} className="bg-zinc-900 p-4 rounded-2xl mb-3 border border-zinc-800 flex-row justify-between items-center shadow-xl">
+              <View key={item} className="bg-white p-4 rounded-2xl mb-4 border-2 border-[#D4A373]/30 flex-row justify-between items-center shadow-lg shadow-[#8B5A2B]/10">
                 <View className="flex-row items-center">
-                  <View className="w-12 h-12 bg-black rounded-xl items-center justify-center border border-zinc-700 mr-4">
-                    <Text className="text-yellow-500 font-extrabold text-sm">{8 + item}:00</Text>
+                  <View className="w-12 h-12 bg-[#F9DCB4] rounded-xl items-center justify-center mr-4 shadow-sm shadow-[#8B5A2B]/20">
+                    <Text className="text-[#8B5A2B] font-black text-sm">{8 + item}:00</Text>
                   </View>
                   <View>
-                    <Text className="text-white font-bold">Group #{2040 + item}</Text>
-                    <Text className="text-zinc-500 text-xs mt-1">Guide: Amit S. • Driver: Rahul V.</Text>
+                    <Text className="text-[#4A3728] font-black text-lg">Group #{2040 + item}</Text>
+                    <Text className="text-[#8B5A2B] text-xs mt-1 font-bold">Guide: Amit S. • Driver: Rahul V.</Text>
                   </View>
                 </View>
-                <TouchableOpacity className="bg-black px-3 py-2 rounded-lg border border-zinc-800">
-                  <Text className="text-yellow-500 text-xs font-bold">Details</Text>
+                <TouchableOpacity className="bg-[#8B5A2B] px-4 py-2.5 rounded-xl shadow-md shadow-[#8B5A2B]/30">
+                  <Text className="text-[#F9DCB4] text-xs font-black">Details</Text>
                 </TouchableOpacity>
               </View>
             ))}
@@ -234,20 +235,19 @@ export default function DashboardScreen() {
   };
 
   return (
-    // The Root Background
-    <View className="flex-1 bg-[#050505]">
+    // The Root Background updated to warm tone
+    <View className="flex-1 bg-[#FAF8F5]">
       {/* The Constraining Wrapper for Tablets/Desktop */}
       <View className={`${APP_MAX_WIDTH} flex-1 overflow-hidden`}>
-        {/* FIXED: Removed the global p-6 padding so the inner content hits the edges */}
         <Animated.View entering={FadeIn.duration(800)} className="flex-1 pt-12 pb-0">
           
-          {/* Mobile Adjusted Header (Added px-6 here to keep it padded) */}
-          <View className="flex-row justify-between items-center  pb-2 z-10 px-6">
+          {/* Mobile Adjusted Header */}
+          <View className="flex-row justify-between items-center pb-2 z-10 px-6">
             <View>
-              <Text className="text-[#F9DCB4] text-[8px] font-bold tracking-widest uppercase mb-1">
+              <Text className="text-[#8B5A2B] text-[10px] font-extrabold tracking-widest uppercase mb-1">
                 {roleString.toUpperCase()}
               </Text>
-              <Text className="text-white font-bold text-2xl tracking-tight">
+              <Text className="text-[#4A3728] font-black text-3xl tracking-tight">
                 Dashboard
               </Text>
             </View>
@@ -257,20 +257,20 @@ export default function DashboardScreen() {
                 <TouchableOpacity 
                   onPress={handleSync}
                   disabled={isSyncing}
-                  className="bg-zinc-900 border border-zinc-700 px-4 py-2 rounded-full flex-row items-center shadow-lg shadow-black"
+                  className="bg-white border-2 border-[#D4A373]/50 px-5 py-2.5 rounded-full flex-row items-center shadow-lg shadow-[#8B5A2B]/15"
                 >
-                  <Ionicons name="sync" size={16} color={isSyncing ? "#a1a1aa" : "#F9DCB4"} />
-                  <Text className={isSyncing ? "text-zinc-400 font-bold ml-2 text-xs" : "text-[#F9DCB4] font-bold ml-2 text-xs"}>
+                  <Ionicons name="sync" size={16} color={isSyncing ? "#D4A373" : "#8B5A2B"} />
+                  <Text className={isSyncing ? "text-[#D4A373] font-bold ml-2 text-xs" : "text-[#8B5A2B] font-extrabold ml-2 text-xs"}>
                     {isSyncing ? "SYNCING..." : "SYNC"}
                   </Text>
                 </TouchableOpacity>
               ) : (
                 <>
-                  <Text className="text-zinc-300 font-bold text-xs mr-3 text-right">
+                  <Text className="text-[#8B5A2B] font-extrabold text-xs mr-3 text-right">
                     {roleString === "Guide" ? "Amit Sharma" : "Rahul Verma"}
                   </Text>
-                  <View className="w-10 h-10 bg-zinc-800 rounded-full items-center justify-center border border-yellow-500 shadow-sm shadow-yellow-500/20">
-                    <Ionicons name="person" size={20} color="white" />
+                  <View className="w-11 h-11 bg-[#F9DCB4] rounded-full items-center justify-center border-2 border-[#8B5A2B] shadow-md shadow-[#8B5A2B]/20">
+                    <Ionicons name="person" size={20} color="#8B5A2B" />
                   </View>
                 </>
               )}
@@ -291,11 +291,11 @@ export default function DashboardScreen() {
 
         {/* CAMERA MODAL */}
         {isCameraVisible && (
-          <Animated.View entering={FadeIn.duration(300)} className="absolute top-0 left-0 right-0 bottom-0 z-50 bg-black">
+          <Animated.View entering={FadeIn.duration(300)} className="absolute top-0 left-0 right-0 bottom-0 z-50 bg-[#4A3728]/95">
             <CameraView className="w-full h-full" facing="back" onBarcodeScanned={handleBarcodeScanned} />
             <View className="absolute top-0 left-0 right-0 bottom-0 justify-between p-12 pt-20">
               <View className="items-center">
-                <Text className="text-yellow-500 font-bold text-sm tracking-wider uppercase bg-black/80 px-6 py-3 rounded-full border border-yellow-500/30">
+                <Text className="text-[#F9DCB4] font-bold text-sm tracking-widest uppercase bg-[#4A3728]/90 px-6 py-3 rounded-full border border-[#F9DCB4]/30 shadow-lg">
                   Align QR Code
                 </Text>
               </View>
@@ -306,14 +306,14 @@ export default function DashboardScreen() {
                     setCameraVisible(false);
                     router.push('/ticket-details');
                   }} 
-                  className="bg-yellow-500 px-6 py-3 rounded-full mb-6 flex-row items-center shadow-lg shadow-yellow-500/20"
+                  className="bg-[#8B5A2B] px-6 py-4 rounded-full mb-6 flex-row items-center shadow-xl shadow-[#4A3728]"
                 >
-                  <Ionicons name="arrow-forward-circle" size={20} color="black" className="mr-2" />
-                  <Text className="text-black font-extrabold ml-2">Simulate Scan</Text>
+                  <Ionicons name="arrow-forward-circle" size={22} color="#F9DCB4" className="mr-2" />
+                  <Text className="text-[#F9DCB4] font-extrabold ml-2 text-base">Simulate Scan</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => setCameraVisible(false)} className="bg-black/80 p-4 rounded-full border border-zinc-700">
-                  <Ionicons name="close" size={32} color="white" />
+                <TouchableOpacity onPress={() => setCameraVisible(false)} className="bg-[#4A3728]/90 p-4 rounded-full border border-[#F9DCB4]/30">
+                  <Ionicons name="close" size={32} color="#F9DCB4" />
                 </TouchableOpacity>
               </View>
             </View>

@@ -14,40 +14,48 @@ export default function GuidesScreen() {
   ];
 
   return (
-    <View className="flex-1 bg-[#050505] w-full h-screen">
-      <View className="flex-row items-center p-6 pt-12 border-b border-zinc-800">
-        <TouchableOpacity onPress={() => router.back()} className="mr-4 bg-zinc-900 p-2 rounded-full">
-          <Ionicons name="arrow-back" size={24} color="white" />
+    <View className="flex-1 bg-[#FAF8F5] w-full h-screen">
+      
+      {/* Custom Header with Back Button */}
+      <View className="flex-row items-center p-6 pt-12 border-b-2 border-[#F9DCB4]/50">
+        <TouchableOpacity 
+          onPress={() => router.back()} 
+          className="mr-4 bg-white border-2 border-[#D4A373]/40 p-2.5 rounded-full shadow-sm shadow-[#8B5A2B]/10"
+        >
+          <Ionicons name="arrow-back" size={24} color="#8B5A2B" />
         </TouchableOpacity>
-        <Text className="text-white font-extrabold text-2xl">Active Guides</Text>
+        <Text className="text-[#4A3728] font-black text-2xl tracking-tight">Active Guides</Text>
       </View>
 
-      <ScrollView className="flex-1 p-6">
+      <ScrollView className="flex-1 p-6" showsVerticalScrollIndicator={false}>
         {mockGuides.map((guide, index) => (
           <Animated.View 
             key={guide.id} 
             entering={FadeInUp.delay(index * 100).springify()}
-            className="bg-zinc-900 p-5 rounded-3xl mb-4 border border-zinc-800 flex-row items-center"
+            className="bg-white p-5 rounded-3xl mb-4 border-2 border-[#D4A373]/30 flex-row items-center shadow-md shadow-[#8B5A2B]/10"
           >
-            <View className="w-14 h-14 bg-black rounded-full items-center justify-center border border-yellow-500 mr-4">
-              <Ionicons name="person" size={24} color="white" />
+            {/* Guide Avatar */}
+            <View className="w-14 h-14 bg-[#F9DCB4]/50 rounded-2xl items-center justify-center border border-[#D4A373]/30 mr-4 shadow-sm shadow-[#8B5A2B]/10">
+              <Ionicons name="person" size={24} color="#8B5A2B" />
             </View>
             
             <View className="flex-1">
-              <Text className="text-white font-bold text-lg">{guide.name}</Text>
-              <Text className="text-zinc-400 text-xs mb-1">{guide.languages}</Text>
+              <Text className="text-[#4A3728] font-black text-lg">{guide.name}</Text>
+              <Text className="text-[#A07A63] font-bold text-xs mb-1.5">{guide.languages}</Text>
               <View className="flex-row items-center">
-                <Ionicons name="star" size={14} color="#facc15" />
-                <Text className="text-yellow-500 text-xs ml-1 font-bold">{guide.rating}</Text>
+                <Ionicons name="star" size={14} color="#8B5A2B" />
+                <Text className="text-[#8B5A2B] text-xs ml-1 font-black">{guide.rating}</Text>
               </View>
             </View>
 
+            {/* Pricing Section */}
             <View className="items-end">
-              <Text className="text-zinc-500 text-xs font-medium mb-1">Per Trip</Text>
-              <Text className="text-white font-extrabold text-lg">₹{guide.charge}</Text>
+              <Text className="text-[#A07A63] text-[10px] font-black uppercase tracking-widest mb-1">Per Trip</Text>
+              <Text className="text-[#4A3728] font-black text-xl">₹{guide.charge}</Text>
             </View>
           </Animated.View>
         ))}
+        <View className="h-10" />
       </ScrollView>
     </View>
   );
