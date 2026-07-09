@@ -82,7 +82,7 @@ export default function LoginScreen() {
                     key={r}
                     onPress={() => setRole(r)}
                     className={`flex-1 py-2 rounded-full items-center ${
-                      role === r ? "bg-[#F9DCB4]" : "bg-transparent"
+                      role === r ? "bg-white" : "bg-transparent"
                     }`}
                   >
                     <Text className={`font-bold text-xs ${
@@ -96,7 +96,7 @@ export default function LoginScreen() {
 
               {/* Minimalist Line Input: Email */}
               <View className="mb-8 w-full flex-row items-center border-b border-zinc-400 pb-3">
-                <Ionicons name="mail-outline" size={20} color="#F9DCB4" />
+                <Ionicons name="mail-outline" size={20} color="white" />
                 <TextInput
                   className="flex-1 text-white ml-4 text-base"
                   placeholder="Email Address"
@@ -110,7 +110,7 @@ export default function LoginScreen() {
 
               {/* Minimalist Line Input: Password */}
               <View className="mb-8 w-full flex-row items-center border-b border-zinc-400 pb-3">
-                <Ionicons name="lock-closed-outline" size={20} color="#F9DCB4" />
+                <Ionicons name="lock-closed-outline" size={20} color="white" />
                 <TextInput
                   className="flex-1 text-white ml-4 text-base"
                   placeholder="Password"
@@ -130,7 +130,7 @@ export default function LoginScreen() {
 
               <TouchableOpacity 
                 onPress={handleLogin}
-                className="w-full bg-[#F9DCB4] py-4 rounded-full items-center shadow-lg shadow-yellow-500/20 mb-6"
+                className="w-full bg-white py-4 rounded-full items-center shadow-lg shadow-yellow-500/20 mb-6"
               >
                 <Text className="text-black font-extrabold text-lg tracking-widest uppercase">
                   Authenticate
@@ -146,8 +146,8 @@ export default function LoginScreen() {
           {currentView === 'forgot-email' && (
             <Animated.View entering={FadeInLeft.duration(500)}>
               <TouchableOpacity onPress={() => setCurrentView('login')} className="mb-8 self-start flex-row items-center">
-                <Ionicons name="arrow-back" size={20} color="#F9DCB4" />
-                <Text className="text-[#F9DCB4] font-bold ml-2">Back to Login</Text>
+                <Ionicons name="arrow-back" size={20} color="white" />
+                <Text className="text-white font-bold ml-2">Back to Login</Text>
               </TouchableOpacity>
 
               <Text className="text-white font-light text-3xl mb-3">Reset Password</Text>
@@ -156,7 +156,7 @@ export default function LoginScreen() {
               </Text>
 
               <View className="mb-10 w-full flex-row items-center border-b border-zinc-400 pb-3">
-                <Ionicons name="mail-outline" size={20} color="#F9DCB4" />
+                <Ionicons name="mail-outline" size={20} color="white" />
                 <TextInput
                   className="flex-1 text-white ml-4 text-base"
                   placeholder="user@gibzoo.com"
@@ -168,7 +168,7 @@ export default function LoginScreen() {
                 />
               </View>
 
-              <TouchableOpacity onPress={() => setCurrentView('forgot-otp')} className="w-full bg-[#F9DCB4] py-4 rounded-full items-center">
+              <TouchableOpacity onPress={() => setCurrentView('forgot-otp')} className="w-full bg-white py-4 rounded-full items-center">
                 <Text className="text-black font-extrabold text-lg tracking-widest uppercase">Send OTP</Text>
               </TouchableOpacity>
             </Animated.View>
@@ -180,8 +180,8 @@ export default function LoginScreen() {
           {currentView === 'forgot-otp' && (
             <Animated.View entering={FadeInLeft.duration(500)}>
               <TouchableOpacity onPress={() => setCurrentView('forgot-email')} className="mb-8 self-start flex-row items-center">
-                <Ionicons name="arrow-back" size={20} color="#F9DCB4" />
-                <Text className="text-[#F9DCB4] font-bold ml-2">Back</Text>
+                <Ionicons name="arrow-back" size={20} color="white" />
+                <Text className="text-white font-bold ml-2">Back</Text>
               </TouchableOpacity>
 
               <Text className="text-white font-light text-3xl mb-3">Verification</Text>
@@ -201,7 +201,7 @@ export default function LoginScreen() {
                 />
               </View>
 
-              <TouchableOpacity onPress={() => setCurrentView('forgot-password')} className="w-full bg-[#F9DCB4] py-4 rounded-full items-center">
+              <TouchableOpacity onPress={() => setCurrentView('forgot-password')} className="w-full bg-white py-4 rounded-full items-center">
                 <Text className="text-black font-extrabold text-lg tracking-widest uppercase">Verify Code</Text>
               </TouchableOpacity>
             </Animated.View>
@@ -218,7 +218,7 @@ export default function LoginScreen() {
               </Text>
 
               <View className="mb-8 w-full flex-row items-center border-b border-zinc-400 pb-3">
-                <Ionicons name="lock-closed-outline" size={20} color="#F9DCB4" />
+                <Ionicons name="lock-closed-outline" size={20} color="white" />
                 <TextInput
                   className="flex-1 text-white ml-4 text-base"
                   placeholder="New Password"
@@ -231,7 +231,7 @@ export default function LoginScreen() {
 
               {/* CHANGE 2: Confirm Password Input */}
               <View className="mb-12 w-full flex-row items-center border-b border-zinc-400 pb-3">
-                <Ionicons name="checkmark-circle-outline" size={20} color="#F9DCB4" />
+                <Ionicons name="checkmark-circle-outline" size={20} color="white" />
                 <TextInput
                   className="flex-1 text-white ml-4 text-base"
                   placeholder="Confirm Password"
@@ -242,7 +242,7 @@ export default function LoginScreen() {
                 />
               </View>
 
-              <TouchableOpacity onPress={handleChangePassword} className="w-full bg-[#F9DCB4] py-4 rounded-full items-center mt-4">
+              <TouchableOpacity onPress={handleChangePassword} className="w-full bg-white py-4 rounded-full items-center mt-4">
                 <Text className="text-black font-extrabold text-lg tracking-widest uppercase">Save Password</Text>
               </TouchableOpacity>
             </Animated.View>

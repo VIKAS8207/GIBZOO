@@ -2,148 +2,138 @@ import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useRouter, useGlobalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import Animated, { FadeIn, FadeInUp } from 'react-native-reanimated';
+import Animated, { FadeInUp, FadeInDown } from 'react-native-reanimated';
 
 export default function ProfileScreen() {
   const router = useRouter();
   
-  // 1. GLOBALLY CATCH THE ROLE FROM LOGIN
+  // GLOBALLY CATCH THE ROLE FROM LOGIN
   const { userRole } = useGlobalSearchParams();
   const role = (userRole as string) || "Gate Officer"; // Default fallback
 
   const handleLogout = () => {
-    // Navigate back to the main login screen
     router.replace('/');
   };
 
-  // ==========================================
-  // DYNAMIC ROLE DETAILS COMPONENT (EARTHY THEME)
-  // ==========================================
-  const renderRoleDetails = () => {
-    switch (role) {
-      case "Guide":
-        return (
-          <View className="bg-white p-6 rounded-3xl border-2 border-[#D4A373]/40 mb-8 shadow-xl shadow-[#8B5A2B]/10">
-            <Text className="text-[#8B5A2B] font-black uppercase tracking-widest text-xs mb-5">Professional Details</Text>
-            
-            <View className="flex-row items-center justify-between mb-4 pb-4 border-b-2 border-[#F9DCB4]/30">
-              <Text className="text-[#A07A63] font-bold">Languages</Text>
-              <Text className="text-[#4A3728] font-black">English, Hindi</Text>
-            </View>
-            <View className="flex-row items-center justify-between mb-4 pb-4 border-b-2 border-[#F9DCB4]/30">
-              <Text className="text-[#A07A63] font-bold">Current Rating</Text>
-              <View className="flex-row items-center">
-                <Ionicons name="star" size={16} color="#D4A373" />
-                <Text className="text-[#4A3728] font-black ml-1.5">4.8 / 5.0</Text>
-              </View>
-            </View>
-            <View className="flex-row items-center justify-between">
-              <Text className="text-[#A07A63] font-bold">Total Tours</Text>
-              <Text className="text-[#8B5A2B] font-black text-xl">142</Text>
-            </View>
-          </View>
-        );
-        
-      case "Driver":
-        return (
-          <View className="bg-white p-6 rounded-3xl border-2 border-[#D4A373]/40 mb-8 shadow-xl shadow-[#8B5A2B]/10">
-            <Text className="text-[#8B5A2B] font-black uppercase tracking-widest text-xs mb-5">Vehicle Details</Text>
-            
-            <View className="flex-row items-center justify-between mb-4 pb-4 border-b-2 border-[#F9DCB4]/30">
-              <Text className="text-[#A07A63] font-bold">Assigned Vehicle</Text>
-              <Text className="text-[#4A3728] font-black">Safari Jeep (Open)</Text>
-            </View>
-            <View className="flex-row items-center justify-between mb-4 pb-4 border-b-2 border-[#F9DCB4]/30">
-              <Text className="text-[#A07A63] font-bold">License Plate</Text>
-              <View className="bg-[#FAF8F5] px-3 py-1.5 rounded-lg border-2 border-[#D4A373]/50">
-                <Text className="text-[#8B5A2B] font-black tracking-widest">CG04 AB 1234</Text>
-              </View>
-            </View>
-            <View className="flex-row items-center justify-between">
-              <Text className="text-[#A07A63] font-bold">Total Trips</Text>
-              <Text className="text-[#8B5A2B] font-black text-xl">340</Text>
-            </View>
-          </View>
-        );
+  // Determine Identity based on role
+  const userName = role === "Gate Officer" ? "Admin User" : role === "Guide" ? "Amit Sharma" : "Rahul Verma";
+  const userEmail = `${role.toLowerCase().replace(' ', '')}@gibzoo.com`;
+  const userId = role === "Gate Officer" ? "ID: GZ-001" : role === "Guide" ? "ID: GZ-842" : "ID: GZ-913";
 
-      default: // Gate Officer
-        return (
-          <View className="bg-white p-6 rounded-3xl border-2 border-[#D4A373]/40 mb-8 shadow-xl shadow-[#8B5A2B]/10">
-            <Text className="text-[#8B5A2B] font-black uppercase tracking-widest text-xs mb-5">Assignment Details</Text>
-            
-            <View className="flex-row items-center justify-between mb-4 pb-4 border-b-2 border-[#F9DCB4]/30">
-              <Text className="text-[#A07A63] font-bold">Active Post</Text>
-              <Text className="text-[#4A3728] font-black text-lg">North Gate A</Text>
-            </View>
-            <View className="flex-row items-center justify-between mb-4 pb-4 border-b-2 border-[#F9DCB4]/30">
-              <Text className="text-[#A07A63] font-bold">Current Shift</Text>
-              <Text className="text-[#4A3728] font-black">08:00 AM - 04:00 PM</Text>
-            </View>
-            <View className="flex-row items-center justify-between">
-              <Text className="text-[#A07A63] font-bold">Status</Text>
-              <View className="flex-row items-center bg-green-50 px-3 py-1.5 rounded-full border-2 border-green-200">
-                <View className="w-2.5 h-2.5 rounded-full bg-green-500 mr-2" />
-                <Text className="text-green-600 font-black text-xs uppercase tracking-wider">On Duty</Text>
-              </View>
-            </View>
-          </View>
-        );
+  // ==========================================
+  // DYNAMIC LIST ITEMS (Role Specific Detail)
+  // ==========================================
+  const renderListDetail = () => {
+    let icon, title, subtitle;
+    if (role === "Guide") {
+      icon = "language"; title = "Languages"; subtitle = "English, Hindi";
+    } else if (role === "Driver") {
+      icon = "car-sport"; title = "Assigned Vehicle"; subtitle = "Safari Jeep (Open)";
+    } else {
+      icon = "time"; title = "Current Shift"; subtitle = "08:00 AM - 04:00 PM";
     }
+
+    return (
+      <View className="py-5 border-b border-zinc-100 flex-row items-center justify-between">
+        <View className="flex-row items-center">
+          <View className="w-12 h-12 bg-[#F4F4F5] rounded-full items-center justify-center mr-4">
+            <Ionicons name={icon as any} size={18} color="black" />
+          </View>
+          <View>
+            <Text className="text-black font-black text-base mb-0.5">{title}</Text>
+            <Text className="text-zinc-500 font-bold text-[10px] uppercase tracking-widest">{subtitle}</Text>
+          </View>
+        </View>
+      </View>
+    );
   };
 
   return (
-    <View className="flex-1 bg-[#FAF8F5] w-full h-screen">
+    <View className="flex-1 bg-white w-full h-screen">
       
-      <Animated.View entering={FadeIn.duration(800)} className="flex-1 p-6 pt-12">
+      {/* ==========================================
+          LAYER 1: The Purple Header (Clean & Contained)
+      ========================================== */}
+      <Animated.View entering={FadeInDown.duration(600)} className="bg-[#E6E5F3] pt-20 pb-10 px-6 rounded-b-[40px] z-20">
         
-        {/* Header Section */}
-        <View className="flex-row justify-between items-center mb-8">
-          <Text className="text-[#4A3728] font-black text-3xl tracking-tight">My Profile</Text>
+        {/* Top Options */}
+        <View className="flex-row justify-between items-center mb-6">
+          <View className="bg-black px-4 py-1.5 rounded-full shadow-sm">
+            <Text className="text-white font-extrabold text-[10px] uppercase tracking-widest">{role}</Text>
+          </View>
+          <TouchableOpacity className="w-10 h-10 bg-white rounded-full items-center justify-center shadow-sm">
+            <Ionicons name="pencil" size={16} color="black" />
+          </TouchableOpacity>
         </View>
 
-        <ScrollView showsVerticalScrollIndicator={false}>
-          
-          {/* Top Identity Card */}
-          <Animated.View entering={FadeInUp.delay(100).springify()} className="items-center mb-10">
-            {/* Soft Peach Avatar Background with crisp white border */}
-            <View className="w-32 h-32 bg-[#F9DCB4] rounded-full items-center justify-center mb-5 border-4 border-white shadow-xl shadow-[#8B5A2B]/20">
-              <Ionicons name="person" size={50} color="#8B5A2B" />
-            </View>
-            
-            <Text className="text-[#4A3728] text-3xl font-black mb-1">
-              {role === "Gate Officer" ? "Admin User" : role === "Guide" ? "Amit Sharma" : "Rahul Verma"}
-            </Text>
-            
-            <Text className="text-[#A07A63] font-bold mb-4">
-              {role.toLowerCase().replace(' ', '')}@gibzoo.com
-            </Text>
-
-            <View className="bg-[#8B5A2B] px-6 py-2 rounded-full shadow-md shadow-[#8B5A2B]/30">
-              <Text className="text-[#F9DCB4] font-black text-xs tracking-widest uppercase">
-                {role}
-              </Text>
-            </View>
-          </Animated.View>
-
-          {/* Dynamic Role Data Section */}
-          <Animated.View entering={FadeInUp.delay(200).springify()}>
-            {renderRoleDetails()}
-          </Animated.View>
-
-          {/* Secure Logout Button */}
-          <Animated.View entering={FadeInUp.delay(300).springify()}>
-            <TouchableOpacity 
-              onPress={handleLogout}
-              // Added mb-32 so it easily clears your floating bottom navigation bar
-              className="w-full bg-white border-2 border-red-200 py-4 rounded-2xl items-center flex-row justify-center mb-32 shadow-lg shadow-red-500/10"
-            >
-              <Ionicons name="power" size={22} color="#ef4444" className="mr-2" />
-              <Text className="text-red-500 font-black text-lg">Secure Logout</Text>
-            </TouchableOpacity>
-          </Animated.View>
-
-        </ScrollView>
+        {/* Profile Identity */}
+        <View className="flex-row items-center mt-2">
+          <View className="w-20 h-20 bg-black rounded-full items-center justify-center mr-5 border-4 border-white shadow-sm">
+            <Ionicons name="person" size={32} color="white" />
+          </View>
+          <View>
+            <Text className="text-black font-black text-3xl tracking-tight">{userName}</Text>
+            <Text className="text-zinc-600 font-bold text-xs mt-1">{userId}</Text>
+            <Text className="text-zinc-500 font-bold text-[10px] uppercase tracking-widest mt-1.5">{userEmail}</Text>
+          </View>
+        </View>
       </Animated.View>
+
+      {/* ==========================================
+          LAYER 2: Minimalist Menu List
+      ========================================== */}
+      <ScrollView showsVerticalScrollIndicator={false} className="flex-1 px-6 pt-6">
+        
+        <Animated.View entering={FadeInUp.delay(100).springify()}>
+          
+          {/* Role Specific Detail Row */}
+          {renderListDetail()}
+
+          {/* Standard Menu Items */}
+          <TouchableOpacity className="py-5 border-b border-zinc-100 flex-row items-center justify-between">
+            <View className="flex-row items-center">
+              <View className="w-12 h-12 bg-[#F4F4F5] rounded-full items-center justify-center mr-4">
+                <Ionicons name="help-buoy" size={18} color="black" />
+              </View>
+              <Text className="text-black font-black text-base">Help & Support</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={18} color="#a1a1aa" />
+          </TouchableOpacity>
+
+          <TouchableOpacity className="py-5 border-b border-zinc-100 flex-row items-center justify-between">
+            <View className="flex-row items-center">
+              <View className="w-12 h-12 bg-[#F4F4F5] rounded-full items-center justify-center mr-4">
+                <Ionicons name="document-text" size={18} color="black" />
+              </View>
+              <Text className="text-black font-black text-base">Terms of Service</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={18} color="#a1a1aa" />
+          </TouchableOpacity>
+
+          <TouchableOpacity className="py-5 border-b border-zinc-100 flex-row items-center justify-between">
+            <View className="flex-row items-center">
+              <View className="w-12 h-12 bg-[#F4F4F5] rounded-full items-center justify-center mr-4">
+                <Ionicons name="shield-checkmark" size={18} color="black" />
+              </View>
+              <Text className="text-black font-black text-base">Privacy Policy</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={18} color="#a1a1aa" />
+          </TouchableOpacity>
+
+          {/* Secure Logout */}
+          <TouchableOpacity onPress={handleLogout} className="py-6 flex-row items-center mt-2">
+            <View className="w-12 h-12 bg-red-50 border border-red-100 rounded-full items-center justify-center mr-4">
+              <Ionicons name="log-out" size={20} color="#ef4444" />
+            </View>
+            <Text className="text-[#ef4444] font-black text-base">Secure Logout</Text>
+          </TouchableOpacity>
+
+        </Animated.View>
+
+        {/* Bottom spacer for floating navigation bar */}
+        <View className="h-24" />
+
+      </ScrollView>
     </View>
   );
 }
