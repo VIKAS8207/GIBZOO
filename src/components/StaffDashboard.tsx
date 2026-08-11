@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-import Animated, { FadeInUp, FadeInDown, Layout } from "react-native-reanimated";
+import Animated, { FadeInUp, FadeInDown } from "react-native-reanimated";
 
 export default function StaffDashboard({ role }: { role: string }) {
   // Dynamic Identity
   const userName = role === "Guide" ? "Amit Sharma" : "Rahul Verma";
+  const staffId = role === "Guide" ? "GDE-8042" : "DVR-3091"; // Added Staff ID
   
   // Interactive State Management
   const [activeTrips, setActiveTrips] = useState([
@@ -36,20 +37,25 @@ export default function StaffDashboard({ role }: { role: string }) {
       {/* ==========================================
           LAYER 1: Dashboard Header (Pastel Purple)
       ========================================== */}
-      <Animated.View entering={FadeInDown.duration(600)} className="bg-[#E6E5F3] pt-16 pb-10 px-6 rounded-b-[40px] z-20">
-        <View className="flex-row justify-between items-start">
-          <View>
-            {/* Role Badge at the top */}
-            <View className="bg-black px-3 py-1 rounded-full self-start mb-3 flex-row items-center shadow-sm">
-              <Ionicons name={role === "Guide" ? "map" : "car"} size={10} color="white" className="mr-1.5" />
-              <Text className="text-white font-extrabold text-[9px] uppercase tracking-widest">{role}</Text>
-            </View>
-            
-            {/* Cleaner, scaled-down Name */}
-            <Text className="text-black font-black text-2xl tracking-tight">Hi, {userName}</Text>
-            <Text className="text-zinc-600 font-medium text-xs mt-1">Here is your schedule for today</Text>
+      <Animated.View entering={FadeInDown.duration(600)} className="bg-[#E6E5F3] pt-20 pb-12 px-6 rounded-b-[40px] z-20 items-center">
+        
+        {/* Role Badge centered at the top */}
+        <View className="bg-black px-3 py-1 rounded-full mb-3 flex-row items-center shadow-sm">
+          <Ionicons name={role === "Guide" ? "map" : "car"} size={10} color="white" className="mr-1.5" />
+          <Text className="text-white font-extrabold text-[9px] uppercase tracking-widest">{role}</Text>
+        </View>
+        
+        {/* Centered Name */}
+        <Text className="text-black font-black text-3xl tracking-tight mb-2">Hi, {userName}</Text>
+
+        {/* Big QR Code Card */}
+        <View className="items-center">
+          <Ionicons name="qr-code" size={140} color="black" />
+          <View className="bg-[#F4F4F5] px-4 py-1.5 rounded-full mt-3">
+            <Text className="text-black font-extrabold text-xs tracking-widest uppercase">{staffId}</Text>
           </View>
         </View>
+
       </Animated.View>
 
       {/* ==========================================
@@ -100,7 +106,6 @@ export default function StaffDashboard({ role }: { role: string }) {
               activeTrips.map((ticket, index) => (
                 <Animated.View 
                   key={ticket.id} 
-                  layout={Layout.springify()} 
                   entering={FadeInUp.delay(300 + (index * 50)).springify()}
                   className="py-4 border-b border-zinc-100 flex-row justify-between items-center"
                 >
@@ -138,7 +143,6 @@ export default function StaffDashboard({ role }: { role: string }) {
             {historyTrips.map((ticket, index) => (
               <Animated.View 
                 key={ticket.id}
-                layout={Layout.springify()} 
                 entering={FadeInUp.delay(400 + (index * 50)).springify()}
                 className="py-4 border-b border-zinc-100 flex-row justify-between items-center opacity-70"
               >
