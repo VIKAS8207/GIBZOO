@@ -8,11 +8,12 @@ export default function PendingGuidesScreen() {
   const router = useRouter();
 
   // Mock Tickets: Driver is assigned, but Guide is missing.
+  // ADDED: vehicleNo and vehicleType to the existing data.
   const pendingTickets = [
-    { id: 'TKT-000021', group: 'Group #2045', time: '10:30 AM', members: 4, driver: 'Rahul Verma' },
-    { id: 'TKT-000022', group: 'Group #2048', time: '11:15 AM', members: 6, driver: 'Vikash Patel' },
-    { id: 'TKT-000023', group: 'Group #2051', time: '01:00 PM', members: 2, driver: 'Suresh Kumar' },
-    { id: 'TKT-000024', group: 'Group #2055', time: '02:30 PM', members: 8, driver: 'Rahul Verma' },
+    { id: 'TKT-000021', group: 'Group #2045', time: '10:30 AM', members: 4, driver: 'Rahul Verma', vehicleType: 'LMV', vehicleNo: 'MP04 AB 1234' },
+    { id: 'TKT-000022', group: 'Group #2048', time: '11:15 AM', members: 6, driver: 'Vikash Patel', vehicleType: 'HMV', vehicleNo: 'MP04 XY 9876' },
+    { id: 'TKT-000023', group: 'Group #2051', time: '01:00 PM', members: 2, driver: 'Suresh Kumar', vehicleType: 'LMV', vehicleNo: 'MP04 MN 4567' },
+    { id: 'TKT-000024', group: 'Group #2055', time: '02:30 PM', members: 8, driver: 'Rahul Verma', vehicleType: 'LMV', vehicleNo: 'MP04 AB 1234' },
   ];
 
   return (
@@ -56,9 +57,15 @@ export default function PendingGuidesScreen() {
                   <Text className="text-black font-extrabold text-sm">{ticket.time}</Text>
                 </View>
                 
-                <Text className="text-zinc-500 font-medium text-xs mb-3">
-                  {ticket.id} • {ticket.members} Members
-                </Text>
+                {/* Updated details section to include Vehicle Info seamlessly */}
+                <View className="mb-3">
+                  <Text className="text-zinc-500 font-medium text-xs mb-1">
+                    {ticket.id} • {ticket.members} Members
+                  </Text>
+                  <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest">
+                    {ticket.vehicleType} • <Text className="text-zinc-500">{ticket.vehicleNo}</Text>
+                  </Text>
+                </View>
 
                 <View className="flex-row items-center">
                   <Text className="text-zinc-400 text-[10px] font-bold uppercase tracking-widest mr-4">

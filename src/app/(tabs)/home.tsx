@@ -1,24 +1,24 @@
 import React, { useState, useCallback } from "react";
 import { Text, View, TouchableOpacity, ScrollView, Dimensions, BackHandler } from "react-native";
-import { useRouter, useLocalSearchParams, useFocusEffect } from "expo-router";
+import { useRouter, useGlobalSearchParams, useFocusEffect } from "expo-router";
 import Animated, { FadeIn, FadeInDown, FadeInUp } from "react-native-reanimated";
 import { Ionicons } from '@expo/vector-icons';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 
 // Chart Kit Imports
-import { LineChart } from "react-native-chart-kit";
+import { BarChart } from "react-native-chart-kit";
 
 // Segregated Components
 import StaffDashboard from "../../components/StaffDashboard";
+import TicketDashboard from "../../components/TicketDashboard"; // <-- ADDED TICKET DASHBOARD IMPORT
 
 const screenWidth = Dimensions.get("window").width;
-const miniChartWidth = (screenWidth / 2) - 30; 
 
 export default function DashboardScreen() {
   const router = useRouter();
   
-  const { userRole } = useLocalSearchParams();
-  // FIX: Renamed this to just "role" so it matches perfectly everywhere
+  // FIX: Using useGlobalSearchParams so it catches the login params perfectly
+  const { userRole } = useGlobalSearchParams();
   const role = (userRole as string) || "Gate Officer"; 
   
   const [isCameraVisible, setCameraVisible] = useState(false);
@@ -61,22 +61,25 @@ export default function DashboardScreen() {
   // ==========================================
   const renderGateOfficerUI = () => {
     
-    // Minimalist Green Line Chart Data
-    const lineData = {
-      labels: ["1", "2", "3", "4", "5", "6"],
-      datasets: [{ data: [20, 45, 28, 80, 50, 99] }]
+    // Full-Width Clean Black & White Bar Chart Data
+    const barData = {
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+      datasets: [{ data: [62, 85, 98, 142, 115, 128] }] 
     };
 
-    const miniChartConfig = {
-      backgroundColor: "#F4F4F5",
-      backgroundGradientFrom: "#F4F4F5",
-      backgroundGradientTo: "#F4F4F5",
+    const barChartConfig = {
+      backgroundColor: "#FFFFFF",
+      backgroundGradientFrom: "#FFFFFF",
+      backgroundGradientTo: "#FFFFFF",
       decimalPlaces: 0,
-      color: (opacity = 1) => `rgba(50, 160, 66, ${opacity})`, 
-      labelColor: () => `transparent`, 
-      strokeWidth: 3,
-      propsForDots: { r: "0" }, 
-      propsForBackgroundLines: { strokeWidth: 0 } 
+      color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, 
+      labelColor: (opacity = 1) => `rgba(161, 161, 170, ${opacity})`, 
+      barPercentage: 0.55,
+      strokeWidth: 1,
+      propsForBackgroundLines: {
+        strokeDasharray: "4", 
+        stroke: "#F4F4F5", 
+      }
     };
 
     return (
@@ -161,101 +164,126 @@ export default function DashboardScreen() {
           <ScrollView showsVerticalScrollIndicator={false} className="p-6 pt-8">
             
            {/* ==========================================
-    WIDER STATS GRID: Balanced & Spacious
-========================================== */}
-<View className="flex-row justify-between mb-8 gap-x-2 ">
-  
-  {/* 1. Trip Traffic Card (Black) */}
-  <View className="flex-1 bg-black rounded-[32px] p-6 justify-between min-h-[220px]">
-    <View>
-      <Text className="text-white font-extrabold text-sm mb-1">Trip Traffic</Text>
-      <Text className="text-zinc-500 font-medium text-[10px] uppercase tracking-widest">Volume Report</Text>
-    </View>
-    
-    <View className="mt-6">
-      <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">Yesterday</Text>
-      <Text className="text-white font-black text-4xl tracking-tighter">42</Text>
-    </View>
+               WIDER STATS GRID: Balanced & Spacious
+           ========================================== */}
+            <View className="flex-row justify-between mb-8 gap-x-2 ">
+              
+              {/* 1. Trip Traffic Card (Black) */}
+              <View className="flex-1 bg-black rounded-[32px] p-6 justify-between min-h-[220px]">
+                <View>
+                  <Text className="text-white font-extrabold text-sm mb-1">Trip Traffic</Text>
+                  <Text className="text-zinc-500 font-medium text-[10px] uppercase tracking-widest">Volume Report</Text>
+                </View>
+                
+                <View className="mt-6">
+                  <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">Yesterday</Text>
+                  <Text className="text-white font-black text-4xl tracking-tighter">42</Text>
+                </View>
 
-    <View className="mt-6 pt-4 border-t border-zinc-800 flex-row items-center justify-between">
-      <View>
-        <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">This Month</Text>
-        <Text className="text-white font-black text-xl">856</Text>
-      </View>
-      <View className="bg-[#32A042] w-8 h-8 rounded-full items-center justify-center">
-        <Ionicons name="car" size={14} color="white" />
-      </View>
-    </View>
-  </View>
+                <View className="mt-6 pt-4 border-t border-zinc-800 flex-row items-center justify-between">
+                  <View>
+                    <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">This Month</Text>
+                    <Text className="text-white font-black text-xl">856</Text>
+                  </View>
+                  <View className="bg-[#32A042] w-8 h-8 rounded-full items-center justify-center">
+                    <Ionicons name="car" size={14} color="white" />
+                  </View>
+                </View>
+              </View>
 
-  {/* 2. Your Income Card (Light Gray) */}
-  <View className="flex-1 bg-[#F4F4F5] rounded-[32px] p-6 justify-between min-h-[220px]">
-    <View>
-      <Text className="text-black font-extrabold text-sm mb-1">Your Income</Text>
-      <Text className="text-zinc-400 font-medium text-[10px] uppercase tracking-widest">Comparison View</Text>
-    </View>
-    
-    <View className="mt-6">
-      <Text className="text-zinc-500 font-bold text-[10px] uppercase tracking-widest mb-1">This Month</Text>
-      <Text className="text-black font-black text-4xl tracking-tighter">₹2.4k</Text>
-    </View>
+              {/* 2. Your Income Card (Light Gray) */}
+              <View className="flex-1 bg-[#F4F4F5] rounded-[32px] p-6 justify-between min-h-[220px]">
+                <View>
+                  <Text className="text-black font-extrabold text-sm mb-1">Your Income</Text>
+                  <Text className="text-zinc-400 font-medium text-[10px] uppercase tracking-widest">Comparison View</Text>
+                </View>
+                
+                <View className="mt-6">
+                  <Text className="text-zinc-500 font-bold text-[10px] uppercase tracking-widest mb-1">This Month</Text>
+                  <Text className="text-black font-black text-4xl tracking-tighter">₹2.4k</Text>
+                </View>
 
-    <View className="mt-6 pt-4 border-t border-zinc-200 flex-row items-center justify-between">
-      <View>
-        <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">Last Month</Text>
-        <Text className="text-zinc-600 font-bold text-sm">₹1.9k</Text>
-      </View>
-      
-      <View className="bg-[#32A042] px-2 py-1 rounded-full flex-row items-center">
-        <Ionicons name="trending-up" size={10} color="white" />
-        <Text className="text-white font-black text-[9px] ml-1">+26%</Text>
-      </View>
-    </View>
-  </View>
-</View>
+                <View className="mt-6 pt-4 border-t border-zinc-200 flex-row items-center justify-between">
+                  <View>
+                    <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">Last Month</Text>
+                    <Text className="text-zinc-600 font-bold text-sm">₹1.9k</Text>
+                  </View>
+                  
+                  <View className="bg-[#32A042] px-2 py-1 rounded-full flex-row items-center">
+                    <Ionicons name="trending-up" size={10} color="white" />
+                    <Text className="text-white font-black text-[9px] ml-1">+26%</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
 
-            {/* Recent Activity List */}
+            {/* ==========================================
+                RENEWED RECENT ACTIVITY & MONTHLY GRAPH
+            ========================================== */}
+            <View className="mt-4 mb-4">
+              <Text className="text-black font-extrabold text-sm mb-4">Revenue Traffic (6 Months)</Text>
+              
+              {/* Full-Width Smooth Bar Chart */}
+              <View className="w-full bg-white rounded-3xl items-center justify-center mb-8 overflow-hidden">
+                <BarChart
+                  data={barData}
+                  width={screenWidth - 48}
+                  height={180}
+                  yAxisLabel="₹"
+                  yAxisSuffix="k"
+                  chartConfig={barChartConfig}
+                  verticalLabelRotation={0}
+                  withInnerLines={true}
+                  showBarTops={false}
+                  fromZero={true}
+                  style={{
+                    marginVertical: 8,
+                    borderRadius: 16,
+                    paddingRight: 45
+                  }}
+                />
+              </View>
+            </View>
+
+            {/* Recent Activity List Title */}
             <View className="flex-row justify-between items-center mb-4">
               <Text className="text-black font-extrabold text-sm">Recent Activity</Text>
               <Ionicons name="arrow-forward" size={18} color="black" />
             </View>
 
-            {/* Recent Activity List Container */}
+            {/* Clean Line-Separated Activity Ledger */}
             <View className="mb-10">
-              {/* List Item 1 */}
-              <View className="flex-row items-center justify-between p-4 border-b border-zinc-200">
+              <View className="flex-row items-center justify-between py-4 border-b border-zinc-100">
                 <View className="flex-row items-center">
-                  <View className="w-12 h-12 bg-white rounded-full items-center justify-center mr-4">
-                    <Ionicons name="car" size={20} color="black" />
+                  <View className="w-10 h-10 bg-[#F4F4F5] rounded-full items-center justify-center mr-4">
+                    <Ionicons name="car" size={16} color="black" />
                   </View>
                   <View>
-                    <Text className="text-black font-bold">Driver Payout</Text>
-                    <Text className="text-zinc-400 text-xs font-medium mt-0.5">Yesterday</Text>
+                    <Text className="text-black font-black text-sm">Driver Payout</Text>
+                    <Text className="text-zinc-400 text-[10px] font-bold uppercase tracking-widest mt-0.5">Yesterday</Text>
                   </View>
                 </View>
-                <Text className="text-black font-black text-lg">-₹1500</Text>
+                <Text className="text-black font-black text-base">-₹1,500</Text>
               </View>
 
-              {/* List Item 2 */}
-              <View className="flex-row items-center justify-between p-4">
+              <View className="flex-row items-center justify-between py-4 border-b border-zinc-100">
                 <View className="flex-row items-center">
-                  <View className="w-12 h-12 bg-black rounded-full items-center justify-center mr-4">
-                    <Ionicons name="checkmark" size={20} color="white" />
+                  <View className="w-10 h-10 bg-[#F4F4F5] rounded-full items-center justify-center mr-4">
+                    <Ionicons name="checkmark" size={16} color="#32A042" />
                   </View>
                   <View>
-                    <Text className="text-black font-bold">Group #2045</Text>
-                    <Text className="text-zinc-400 text-xs font-medium mt-0.5">3h ago</Text>
+                    <Text className="text-black font-black text-sm">Group #2045</Text>
+                    <Text className="text-zinc-400 text-[10px] font-bold uppercase tracking-widest mt-0.5">3h ago</Text>
                   </View>
                 </View>
-                <Text className="text-black font-black text-lg">+₹2000</Text>
+                <Text className="text-[#32A042] font-black text-base">+₹2,000</Text>
               </View>
 
-              {/* NEW: See all button at the bottom right */}
               <TouchableOpacity 
                 onPress={() => router.push('/history')} 
-                className="items-end px-5 pb-4 pt-2"
+                className="items-end pt-4 pb-2"
               >
-                <Text className="text-[#8B5A2B] font-black text-xs uppercase tracking-widest">See all</Text>
+                <Text className="text-zinc-400 font-extrabold text-xs uppercase tracking-widest">See all activity</Text>
               </TouchableOpacity>
             </View>
             
@@ -266,19 +294,25 @@ export default function DashboardScreen() {
     );
   };
 
+  // ==========================================
+  // MAIN RETURN BLOCK - FIX IS HERE
+  // ==========================================
   return (
     <View className="flex-1 bg-black">
-      {role === "Gate Officer" 
-        ? renderGateOfficerUI() 
-        : (
-          <View className="flex-1 bg-black">
-            {/* FIX: Now successfully passing the role down to the component */}
-            <StaffDashboard role={role} />
-          </View>
-        )
-      }
+      {role === "Gate Officer" ? (
+        renderGateOfficerUI()
+      ) : role === "Ticket" ? (
+        <View className="flex-1 bg-black">
+          {/* Automatically shows the TicketDashboard when logged in as Ticket */}
+          <TicketDashboard />
+        </View>
+      ) : (
+        <View className="flex-1 bg-black">
+          <StaffDashboard role={role} />
+        </View>
+      )}
 
-      {/* CAMERA MODAL - Styled to match the new high-contrast UI */}
+      {/* CAMERA MODAL */}
       {isCameraVisible && (
         <Animated.View entering={FadeIn.duration(300)} className="absolute top-0 left-0 right-0 bottom-0 z-50 bg-black/95">
           <CameraView className="w-full h-full absolute" facing="back" onBarcodeScanned={handleBarcodeScanned} />

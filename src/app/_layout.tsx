@@ -15,6 +15,7 @@ export default function RootLayout() {
       <Stack.Screen name="history" />
       <Stack.Screen name="guides" />
       <Stack.Screen name="drivers" />
+      <Stack.Screen name="create-ticket" />
       <Stack.Screen name="ticket-details" />
     </Stack>
   );

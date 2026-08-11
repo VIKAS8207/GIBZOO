@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import Animated, { FadeIn, FadeInUp, FadeInDown } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInUp, FadeInDown, Layout } from 'react-native-reanimated';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 
 export default function TicketDetailsScreen() {
@@ -20,6 +20,7 @@ export default function TicketDetailsScreen() {
 
   const [selectedGuide, setSelectedGuide] = useState<string | null>(null);
   const [selectedDriver, setSelectedDriver] = useState<string | null>(null);
+  const [driverVehicle, setDriverVehicle] = useState<string | null>(null); // NEW: Vehicle State
   
   const [permission, requestPermission] = useCameraPermissions();
   const [scanningTarget, setScanningTarget] = useState<'guide' | 'driver' | null>(null);
@@ -39,6 +40,7 @@ export default function TicketDetailsScreen() {
       setSelectedGuide("Amit Sharma");
     } else if (scanningTarget === 'driver') {
       setSelectedDriver("Rahul Verma");
+      setDriverVehicle("Safari Jeep • CG04 AB 1234"); // Added local vehicle data
     }
     setScanningTarget(null);
   };
@@ -52,7 +54,7 @@ export default function TicketDetailsScreen() {
   return (
     <View className="flex-1 bg-[#F4F4F5] w-full h-screen relative">
       
-      {/* CHANGE 1 & 2: Neo-Brutalist Header (No Back Arrow) */}
+      {/* Neo-Brutalist Header (No Back Arrow) */}
       <View className="pt-16 pb-6 px-6">
         <Text className="text-black font-black text-3xl tracking-tight">Assignment</Text>
         <Text className="text-zinc-500 font-bold mt-1">Scanned Ticket Details</Text>
@@ -60,8 +62,8 @@ export default function TicketDetailsScreen() {
 
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         
-        {/* CHANGE 3: Custom Perforated Ticket UI */}
-        <Animated.View entering={FadeInDown.duration(500)} className="mx-6 mb-8 shadow-sm">
+        {/* Custom Perforated Ticket UI */}
+        <Animated.View entering={FadeInDown.duration(500)} layout={Layout.springify()} className="mx-6 mb-8 shadow-sm">
           
           {/* Ticket Top Half (Pastel Purple) */}
           <View className="bg-[#E6E5F3] p-6 pt-8 rounded-t-[32px]">
@@ -71,7 +73,8 @@ export default function TicketDetailsScreen() {
 
           {/* Ticket Perforated Divider with Cutouts */}
           <View className="bg-white h-8 justify-center relative overflow-hidden">
-            <View className="h-0 w-full border-b-2 border-dashed border-zinc-200" />
+            {/* Color matched to background #F4F4F5 to create a true cut-out illusion */}
+            <View className="h-0 w-full border-b-[3px] border-dashed border-[#F4F4F5]" />
             {/* Left Cutout */}
             <View className="absolute left-[-16px] w-8 h-8 bg-[#F4F4F5] rounded-full" />
             {/* Right Cutout */}
@@ -79,30 +82,53 @@ export default function TicketDetailsScreen() {
           </View>
 
           {/* Ticket Bottom Half (White Grid) */}
-          <View className="bg-white p-6 pb-8 rounded-b-[32px] flex-row flex-wrap">
-            <View className="w-1/2 mb-6">
-              <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">Time</Text>
-              <Text className="text-black font-black text-base">{ticketData.time}</Text>
+          <View className="bg-white p-6 pb-8 rounded-b-[32px]">
+            <View className="flex-row flex-wrap">
+              <View className="w-1/2 mb-6">
+                <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">Time</Text>
+                <Text className="text-black font-black text-base">{ticketData.time}</Text>
+              </View>
+              <View className="w-1/2 mb-6 pl-2">
+                <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">Members</Text>
+                <Text className="text-black font-black text-base">+{ticketData.members}</Text>
+              </View>
+              <View className="w-1/2">
+                <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">Ticket</Text>
+                <Text className="text-black font-black text-base">{ticketData.type}</Text>
+              </View>
+              <View className="w-1/2 pl-2">
+                <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">Contact</Text>
+                <Text className="text-black font-black text-base">{ticketData.contact}</Text>
+              </View>
             </View>
-            <View className="w-1/2 mb-6 pl-2">
-              <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">Members</Text>
-              <Text className="text-black font-black text-base">+{ticketData.members}</Text>
-            </View>
-            <View className="w-1/2">
-              <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">Ticket</Text>
-              <Text className="text-black font-black text-base">{ticketData.type}</Text>
-            </View>
-            <View className="w-1/2 pl-2">
-              <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest mb-1">Contact</Text>
-              <Text className="text-black font-black text-base">{ticketData.contact}</Text>
-            </View>
+
+            {/* Dynamic Staff Reflection Area */}
+            {(selectedGuide || selectedDriver) && (
+              <Animated.View entering={FadeInUp.duration(400)} className="w-full mt-4 pt-5 border-t-2 border-dashed border-[#F4F4F5]">
+                {selectedGuide && (
+                  <View className="flex-row justify-between items-center mb-3">
+                    <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest">Assigned Guide</Text>
+                    <Text className="text-black font-black text-sm">{selectedGuide}</Text>
+                  </View>
+                )}
+                {selectedDriver && (
+                  <View className="flex-row justify-between items-center">
+                    <Text className="text-zinc-400 font-bold text-[10px] uppercase tracking-widest">Assigned Driver</Text>
+                    <View className="items-end">
+                      <Text className="text-black font-black text-sm">{selectedDriver}</Text>
+                      <Text className="text-zinc-500 font-bold text-[9px] uppercase tracking-widest mt-0.5">{driverVehicle}</Text>
+                    </View>
+                  </View>
+                )}
+              </Animated.View>
+            )}
           </View>
         </Animated.View>
 
         <View className="px-6">
           <Text className="text-black font-extrabold text-sm mb-4">Staff Allocation</Text>
 
-          {/* CHANGE 4: Minimalist Staff Allocation - Guide */}
+          {/* Minimalist Staff Allocation - Guide */}
           <Animated.View entering={FadeInUp.delay(100).duration(500)} className="bg-white p-3 rounded-[24px] mb-4 flex-row items-center justify-between">
             <View className="flex-row items-center flex-1 ml-2">
               <View className="w-10 h-10 bg-[#F4F4F5] rounded-full items-center justify-center mr-4">
@@ -125,7 +151,7 @@ export default function TicketDetailsScreen() {
             </TouchableOpacity>
           </Animated.View>
 
-          {/* CHANGE 4: Minimalist Staff Allocation - Driver */}
+          {/* Minimalist Staff Allocation - Driver */}
           <Animated.View entering={FadeInUp.delay(200).duration(500)} className="bg-white p-3 rounded-[24px] mb-10 flex-row items-center justify-between">
             <View className="flex-row items-center flex-1 ml-2">
               <View className="w-10 h-10 bg-[#F4F4F5] rounded-full items-center justify-center mr-4">
@@ -134,7 +160,10 @@ export default function TicketDetailsScreen() {
               <View>
                 <Text className="text-zinc-400 font-bold uppercase tracking-widest text-[9px] mb-0.5">Driver</Text>
                 {selectedDriver ? (
-                  <Text className="text-black font-bold text-base">{selectedDriver}</Text>
+                  <View>
+                    <Text className="text-black font-bold text-base">{selectedDriver}</Text>
+                    <Text className="text-zinc-500 font-bold text-[9px] uppercase tracking-widest mt-0.5">{driverVehicle}</Text>
+                  </View>
                 ) : (
                   <Text className="text-zinc-400 font-medium text-xs">Tap scanner to assign</Text>
                 )}
@@ -152,7 +181,7 @@ export default function TicketDetailsScreen() {
         <View className="h-24" /> 
       </ScrollView>
 
-      {/* CHANGE 5: Floating, Slim, Pill-shaped Bottom Button */}
+      {/* Floating, Slim, Pill-shaped Bottom Button */}
       <Animated.View entering={FadeIn.delay(300)} className="absolute bottom-8 left-6 right-6">
         <TouchableOpacity 
           onPress={handleAssign}

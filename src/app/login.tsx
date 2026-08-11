@@ -13,7 +13,7 @@ export default function LoginScreen() {
   
   // Role State
   const [role, setRole] = useState("Gate Officer");
-  const roles = ["Gate Officer", "Guide", "Driver"];
+  const roles = ["Gate Officer", "Guide", "Driver", "Ticket"];
 
   // View State Machine: Controls WHICH form is showing without changing the page
   type ViewState = 'login' | 'forgot-email' | 'forgot-otp' | 'forgot-password';

@@ -28,7 +28,7 @@ export default function ProfileScreen() {
     if (role === "Guide") {
       icon = "language"; title = "Languages"; subtitle = "English, Hindi";
     } else if (role === "Driver") {
-      icon = "car-sport"; title = "Assigned Vehicle"; subtitle = "Safari Jeep (Open)";
+      icon = "car-sport"; title = "Assigned Vehicle"; subtitle = "MP04 XY 1234";
     } else {
       icon = "time"; title = "Current Shift"; subtitle = "08:00 AM - 04:00 PM";
     }

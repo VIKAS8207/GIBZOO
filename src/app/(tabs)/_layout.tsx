@@ -12,7 +12,12 @@ export default function TabLayout() {
   // 1. Role Identification
   const { userRole } = useGlobalSearchParams();
   const role = (userRole as string) || "Gate Officer";
+  
+  // Create strict boolean checks for each role
+  const isGateOfficer = role === "Gate Officer";
   const isStaff = role === "Guide" || role === "Driver";
+  const isTicket = role === "Ticket";
+  
   const isHome = pathname === '/' || pathname === '/home';
 
   // 2. Gate Officer Camera State
@@ -55,7 +60,7 @@ export default function TabLayout() {
         }}
       >
         {/* ==========================================
-            VISIBLE TABS
+            TAB 1: HOME (Visible to everyone)
         ========================================== */}
         <Tabs.Screen
           name="home"
@@ -67,47 +72,89 @@ export default function TabLayout() {
           }}
         />
         
+        {/* ==========================================
+            TAB 2: MASTER (Gate Officer ONLY)
+            This uses the spread operator (...) to prevent the Expo Crash.
+        ========================================== */}
         <Tabs.Screen
           name="master" 
           options={{
-            title: isHome ? 'Master' : 'New',
-            tabBarIcon: ({ color, focused }) => (
-              <Ionicons name={focused ? "cube" : "cube-outline"} size={26} color={color} />
-            ),
-            ...(isStaff 
-              ? { href: null } 
-              : {              
-                  tabBarButton: isHome 
-                    ? undefined 
-                    : (props: any) => (
-                        <TouchableOpacity 
-                          {...props} 
-                          onPress={handleOpenScanner} 
-                          activeOpacity={0.8}
-                          className="flex-1 items-center justify-center"
-                        >
-                          <View className="bg-[#18181b] px-10 py-2.5 rounded-full flex-row items-center shadow-sm">
-                            <Ionicons name="add" size={16} color="white" />
-                            <Text className="text-white font-bold text-sm ml-1 tracking-wide">New</Text>
-                          </View>
-                        </TouchableOpacity>
-                      )
+            ...(isGateOfficer 
+              ? {
+                  // IF Gate Officer: Show the tab, and apply the morphing "New" button logic
+                  title: isHome ? 'Master' : 'New',
+                  tabBarIcon: ({ color, focused }) => (
+                    <Ionicons name={focused ? "cube" : "cube-outline"} size={26} color={color} />
+                  ),
+                  tabBarButton: isHome ? undefined : (props: any) => (
+                    <TouchableOpacity 
+                      {...props} 
+                      onPress={handleOpenScanner} 
+                      activeOpacity={0.8}
+                      className="flex-1 items-center justify-center"
+                    >
+                      <View className="bg-[#18181b] px-10 py-2.5 rounded-full flex-row items-center shadow-sm">
+                        <Ionicons name="add" size={16} color="white" />
+                        <Text className="text-white font-bold text-sm ml-1 tracking-wide">New</Text>
+                      </View>
+                    </TouchableOpacity>
+                  )
+                }
+              : {
+                  // IF NOT Gate Officer: Hide completely. Never mix 'href' with 'tabBarButton'
+                  href: null 
                 }
             )
           }}
         />
 
+        {/* ==========================================
+            TAB 2: HISTORY (Ticket Role ONLY)
+        ========================================== */}
         <Tabs.Screen
-          name="wallet" 
+          name="history"
           options={{
-            href: !isStaff ? null : '/wallet',
-            title: 'Wallet',
-            tabBarIcon: ({ color, focused }) => (
-              <Ionicons name={focused ? "wallet" : "wallet-outline"} size={26} color={color} />
-            ),
+            ...(isTicket 
+              ? {
+                  // IF Ticket Maker: Show normal static history tab
+                  title: 'History',
+                  tabBarIcon: ({ color, focused }) => (
+                    <Ionicons name={focused ? "receipt" : "receipt-outline"} size={24} color={color} />
+                  ),
+                }
+              : {
+                  // IF NOT Ticket Maker: Hide completely
+                  href: null
+                }
+            )
           }}
         />
 
+        {/* ==========================================
+            TAB 2: WALLET (Staff ONLY)
+        ========================================== */}
+        <Tabs.Screen
+          name="wallet" 
+          options={{
+            ...(isStaff 
+              ? {
+                  // IF Guide/Driver: Show normal static wallet tab
+                  title: 'Wallet',
+                  tabBarIcon: ({ color, focused }) => (
+                    <Ionicons name={focused ? "wallet" : "wallet-outline"} size={26} color={color} />
+                  ),
+                }
+              : {
+                  // IF NOT Staff: Hide completely
+                  href: null
+                }
+            )
+          }}
+        />
+
+        {/* ==========================================
+            TAB 3: PROFILE (Visible to everyone)
+        ========================================== */}
         <Tabs.Screen
           name="profile"
           options={{
@@ -119,37 +166,14 @@ export default function TabLayout() {
         />
 
         {/* ==========================================
-            HIDDEN TABS (Maintains Bottom Nav Bar)
+            HIDDEN TABS (Fixes terminal warnings)
         ========================================== */}
-        <Tabs.Screen
-          name="history"
-          options={{
-            href: null, // Hides it from the physical bar
-          }}
-        />
-        <Tabs.Screen
-          name="guides"
-          options={{
-            href: null,
-          }}
-        />
-        <Tabs.Screen
-          name="drivers"
-          options={{
-            href: null,
-          }}
-        />
-        {/* If you want ticket-details to keep the nav bar too, add it here! */}
-        <Tabs.Screen
-          name="ticket-details"
-          options={{
-            href: null,
-          }}
-        />
+        <Tabs.Screen name="guides" options={{ href: null }} />
+        <Tabs.Screen name="drivers" options={{ href: null }} />
       </Tabs>
 
       {/* GATE OFFICER ONLY: Full Screen QR Scanner Overlay */}
-      {isCameraVisible && !isStaff && (
+      {isCameraVisible && isGateOfficer && (
         <Animated.View entering={FadeIn.duration(300)} className="absolute top-0 left-0 right-0 bottom-0 z-50 bg-[#050505]/95">
           <CameraView className="w-full h-full absolute" facing="back" />
           <View className="absolute top-0 left-0 right-0 bottom-0 justify-between p-8 pt-20 pb-16">

@@ -124,7 +124,7 @@ export default function StaffDashboard({ role }: { role: string }) {
                     onPress={() => handleClearTrip(ticket.id)}
                     className="bg-black px-4 py-2 rounded-full shadow-sm"
                   >
-                    <Text className="text-white font-bold text-[9px] uppercase tracking-widest">Clear Trip</Text>
+                    <Text className="text-white font-bold text-[9px] uppercase tracking-widest">Complete Trip</Text>
                   </TouchableOpacity>
                 </Animated.View>
               ))
